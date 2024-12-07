@@ -1,7 +1,11 @@
 package com.coding_sphere.jwt_rbac_api.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+
+@Document(collection = "users")
 public class User {
     private String username;
     private String password;
