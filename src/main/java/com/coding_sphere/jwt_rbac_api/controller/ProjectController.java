@@ -1,11 +1,9 @@
 package com.coding_sphere.jwt_rbac_api.controller;
 
 import com.coding_sphere.jwt_rbac_api.entity.Project;
-import com.coding_sphere.jwt_rbac_api.repoistory.ProjectRepository;
 import com.coding_sphere.jwt_rbac_api.service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
