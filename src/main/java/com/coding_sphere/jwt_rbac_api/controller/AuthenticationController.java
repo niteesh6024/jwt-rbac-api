@@ -3,15 +3,18 @@ package com.coding_sphere.jwt_rbac_api.controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.coding_sphere.jwt_rbac_api.entity.ERole;
+import com.coding_sphere.jwt_rbac_api.entity.Project;
 import com.coding_sphere.jwt_rbac_api.entity.Role;
 import com.coding_sphere.jwt_rbac_api.entity.User;
 import com.coding_sphere.jwt_rbac_api.payload.request.LoginRequest;
 import com.coding_sphere.jwt_rbac_api.payload.request.SignupRequest;
 import com.coding_sphere.jwt_rbac_api.payload.response.MessageResponse;
 import com.coding_sphere.jwt_rbac_api.payload.response.UserInfoResponse;
+import com.coding_sphere.jwt_rbac_api.repoistory.ProjectRepository;
 import com.coding_sphere.jwt_rbac_api.repoistory.RoleRepository;
 import com.coding_sphere.jwt_rbac_api.repoistory.UserRepository;
 import com.coding_sphere.jwt_rbac_api.security.UserDetailsImpl;
@@ -23,16 +26,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -126,3 +126,40 @@ public class AuthenticationController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }
+//
+//package com.coding_sphere.jwt_rbac_api.controller;
+//
+//import com.coding_sphere.jwt_rbac_api.entity.Project;
+//import com.coding_sphere.jwt_rbac_api.repoistory.ProjectRepository;
+//import com.coding_sphere.jwt_rbac_api.service.ProjectService;
+//import com.coding_sphere.jwt_rbac_api.service.ProjectServiceImp;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.web.bind.annotation.*;
+//
+//        import java.util.List;
+//import java.util.UUID;
+//
+//@RestController
+//@RequestMapping("api/projects")
+//public class ProjectController {
+//    @Autowired
+//    ProjectRepository projectRepository;
+//
+//    @GetMapping()
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+//    private ResponseEntity<?> getprojects(){
+//        System.out.println("niteesh");
+//        return new ResponseEntity<List<Project>>(projectRepository.findAll(),null, HttpStatus.OK);
+//    }
+//
+//    @PostMapping()
+//    @PreAuthorize("hasRole('ADMIN')")
+//    private ResponseEntity<?> createProjects(@RequestBody Project project){
+//        project.setId(UUID.randomUUID().toString());
+//        return new ResponseEntity<Project>(projectRepository.save(project),null, HttpStatus.OK);
+//    }
+//
+//}
