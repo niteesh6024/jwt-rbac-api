@@ -1,25 +1,19 @@
 package com.coding_sphere.jwt_rbac_api.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "Projects")
 public class Project {
+    @Id
     private String id;
     private String name;
     private String description;
-    private User user;
 
-    public Project(String id, String name, String description, User user) {
+    public Project(String id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getId() {

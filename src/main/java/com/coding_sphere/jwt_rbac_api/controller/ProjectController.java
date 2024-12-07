@@ -1,33 +1,34 @@
 package com.coding_sphere.jwt_rbac_api.controller;
 
 import com.coding_sphere.jwt_rbac_api.entity.Project;
-import com.coding_sphere.jwt_rbac_api.entity.User;
+import com.coding_sphere.jwt_rbac_api.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/projects")
 public class ProjectController {
+    @Autowired
+    ProjectService projectService;
 
-    private List<User> user =  new ArrayList<>();
-    private List<Project> projects =  new ArrayList<>();
-
-    @GetMapping("/projects")
+    @GetMapping()
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     private ResponseEntity<?> getprojects(){
-        return new ResponseEntity<String>("succc",null, HttpStatus.OK);
+        System.out.println("niteesh");
+        return new ResponseEntity<List<Project>>(projectService.getProjects(),null, HttpStatus.OK);
     }
 
-    @PostMapping("/projects")
+    @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     private ResponseEntity<?> createProjects(@RequestBody Project project){
         project.setId(UUID.randomUUID().toString());
-        project.setUser(null);
-        projects.add(project);
-        return new ResponseEntity<List<Project>>(projects,null, HttpStatus.OK);
+        return new ResponseEntity<Project>(projectService.createProject(project),null, HttpStatus.OK);
     }
 
 }
