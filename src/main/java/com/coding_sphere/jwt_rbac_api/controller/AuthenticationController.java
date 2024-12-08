@@ -8,7 +8,6 @@ import com.coding_sphere.jwt_rbac_api.service.UserService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,9 @@ public class AuthenticationController {
         try {
             UserInfoResponse userInfoResponse = userService.loginUser(loginRequest);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, userInfoResponse.getJwtKey())
+                    .header(
+//                            HttpHeaders.SET_COOKIE,
+                            userInfoResponse.getJwtKey())
                     .body(userInfoResponse);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getMessage()));

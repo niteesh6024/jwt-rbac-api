@@ -34,7 +34,6 @@ public class ProjectServiceImp implements ProjectService{
     }
 
     public Project updateProject(Project newproject) throws Exception{
-        System.out.println(newproject.getId());
         if(newproject.getId()==null){
             throw new Exception("Error: please give project id!");
         }

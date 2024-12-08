@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/project")
@@ -34,9 +33,6 @@ public class ProjectController {
     }
 
     @PutMapping()
-//    private ResponseEntity<?> updateproject(@RequestParam(required = true) String projectId,
-//                                            @RequestParam String name,
-//                                            @RequestParam String description){
     private ResponseEntity<?> updateproject(@RequestBody Project project){
         try{
             projectService.updateProject(project);
