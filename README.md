@@ -1,7 +1,7 @@
 # Simple API with JWT Authentication and RBAC
 ## Project Overview
 
-This project is a RESTful API built using Java Spring and MongoDB. It includes JWT-based user authentication and Role-Based Access Control (RBAC). The API features user registration and login, secure password hashing, and CRUD operations for a sample resource called "projects".
+This project is a RESTful API built using Java Spring and MongoDB. It includes JWT-based user authentication and Role-Based Access Control (RBAC). The API features user registration and login, secure password hashing, and CRUD operations for a resource called "projects".
 
 ## Features
 
@@ -23,27 +23,20 @@ Ensure the following software is installed on your system:
 ## Classes Design
 
 ### 1. **User**
-- **Arena** is the main interface for the game, which includes methods for starting the tournament and managing matches.
-- **MagicalArena**: Implements the `Arena` interface and manages the gameplay between two players.
-- **ArenaFactory**: A factory class used to create the arena based on the chosen arena type.
-- **RandomPlayerSelector**: Responsible for selecting two random players from the available list.
+- Represents users of the application with properties like username, email, and hashed password
 
-### 2. **Project**
-- **Player**: Interface that defines basic player attributes and actions, such as health, attack, defense, and damage handling.
-- **BasicPlayer**: Implements the `Player` interface and represents a basic player type with a specified health, attack, and defense.
-- **PlayerFactory**: A factory class for creating different types of players.
+### 2. **Role**
+- Represents user roles stored in a MongoDB collection.
+- ERole Enum: Defines roles such as ROLE_USER and ROLE_ADMIN
 
-### 3. **Role**
-- **Dice**: Interface that defines the dice rolling behavior.
-- **SixSidedDice**: Implements a 6-sided dice used by players for attacking and defending.
-- **DiceFactory**: A factory class used to create the dice based on the chosen type.
+### 3. **Project**
+- Represents a project entity with properties like id, name, and description
 
 ## Project Structure
-- src/main/java (Main.java): Contains the main source code files which is inside org.magical_arena package.
-- src/test/java (PlayerTest.java, DiceTest.java and ArenaTest.java: Contains the test source code files which is inside org.magical_arena package.
+- src/main/java (Main.java): Contains main application code, including controllers, services, and entity classes.
+- src/test/java : Contains unit tests for controllers and services.
 - pom.xml: Maven project configuration file.
-- src/main/resources/arena_config.txt The game uses a configuration file to specify the arena settings, dice type, player types, and their attributes.
-
+- src/main/resources/application.properties: Configuration file for the Spring Boot application.
 
 ## How to Run
 
@@ -59,6 +52,7 @@ Ensure the following software is installed on your system:
       -e MONGO_INITDB_DATABASE=codingsphere-db \
       -p 27017:27017 mongo
    ```
+
 3. Import the Project
     - Open Eclipse/intellj IDE.
     - Go to File -> Import -> Existing Maven Projects.
@@ -66,12 +60,13 @@ Ensure the following software is installed on your system:
     - Click Finish.
 
 4. Run the Application:
-    - Run the Main.java file (located in src/main/java) as a Java application to start the application.
+    - Run the Main.java file (located in src/main/java) as a Java application to start the API
 
-5. Open postman: 
-**Create an account**:
-    - hit the endpoint http://localhost:8080/api/auth/signup with POST
-    - body: 
+## Interact with the API Using Postman
+
+1. **Create an account**:
+    - Endpoint: POST http://localhost:8080/api/auth/signup
+    - Request body: 
    ```body
     {
     "username": "<usename>",
@@ -80,32 +75,39 @@ Ensure the following software is installed on your system:
     "password": "xxxx"
     }
     ```
-   - you will see wether the account was created or not. if you try to create a account with existing username or email. it won't allow
-**login to get the jwt token**
-   - hit the endpoint http://localhost:8080/api/auth/signin with POST
-   - body:
+   - Response: Success or error message. Duplicate usernames or emails will be rejected.
+
+2. **Login to Get JWT Token**
+   - Endpoint: POST http://localhost:8080/api/auth/signin
+   - Request body:
       ```body
        {
        "username": "<usename>",
        "password": "xxxx"
        }
        ```
-   - you will get jwt authentication token in the repsonse body. you can use  for further requests.
-6. To view the projects:
-   - hit the endpoint http://localhost:8080/api/project with get and barer token got from the sign in
-   - any user with the valid token can view the projects
+   - Response: JWT token that can be used for authenticated requests.
 
-7. To Update the projects:
-   - hit the endpoint http://localhost:8080/api/project with POST/PUT/DELETE and barer token got from the sign in
-   - the body should you have was:
+3. To view the projects:
+   - Endpoint: GET http://localhost:8080/api/project
+   - Authorization: Include the JWT token in the Authorization header as Bearer <your-jwt-token>
+   - Roles: Any user with a valid token can view projects.
+
+4. CRUD Operations on Projects::
+   - Endpoint: POST/PUT/DELETE http://localhost:8080/api/project
+   - Request body:
       ```body
        {
        "name": "<project name>", // you can update the project name
        "id": "id of the prject>", //you can not update the id
-       "description": "<description" //you can chnage the description
+       "description": "<description" //you can change the description
        }
        ```
-   - only admin users with the valid token can do CRUD operations on the projects
+   - Authorization: Only admin users with a valid token can perform CRUD operations.
 
 ## Unit Tests
 The project includes unit tests to ensure the correctness of the code. The tests use JUnit 5.9.3.
+
+
+## swagger doc
+- http://localhost:8080/swagger-ui/index.html

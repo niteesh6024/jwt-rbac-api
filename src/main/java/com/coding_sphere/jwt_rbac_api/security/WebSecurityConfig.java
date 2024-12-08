@@ -67,7 +67,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth ->
-          auth.requestMatchers("/api/auth/**").permitAll()
+          auth.requestMatchers("/api/auth/**","/v3/api-docs/**", "/swagger-ui.html","/swagger-ui/**").permitAll()
                   .requestMatchers(HttpMethod.GET, "/api/project/**").hasAnyRole("USER", "ADMIN")
                   .requestMatchers(HttpMethod.POST, "/api/project/**").hasRole("ADMIN")
                   .requestMatchers(HttpMethod.PUT, "/api/project/**").hasRole("ADMIN")
