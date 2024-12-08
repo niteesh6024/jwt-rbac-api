@@ -1,6 +1,5 @@
 package com.coding_sphere.jwt_rbac_api.service;
 
-
 import com.coding_sphere.jwt_rbac_api.entity.ERole;
 import com.coding_sphere.jwt_rbac_api.entity.Role;
 import com.coding_sphere.jwt_rbac_api.entity.User;

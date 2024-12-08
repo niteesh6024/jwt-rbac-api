@@ -70,6 +70,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
           auth.requestMatchers("/api/auth/**").permitAll()
                   .requestMatchers(HttpMethod.GET, "/api/project/**").hasAnyRole("USER", "ADMIN")
                   .requestMatchers(HttpMethod.POST, "/api/project/**").hasRole("ADMIN")
+                  .requestMatchers(HttpMethod.PUT, "/api/project/**").hasRole("ADMIN")
+                  .requestMatchers(HttpMethod.DELETE, "/api/project/**").hasRole("ADMIN")
               .anyRequest().authenticated()
         );
 
